@@ -6,10 +6,11 @@ import {Produit} from "./produit";
     pure: false
 })
 export class FilterPipe implements PipeTransform {
-    transform(items: any[], filter: Produit): any {
+    transform(items: Produit[], filter: Produit): any {
         if (!items || !filter) {
             return items;
         }
-        return items.filter(item => item.libelle.indexOf(filter.libelle) !== -1);
+        // @ts-ignore
+        return items.filter((item): item is Produit => item !== undefined && item?.libelle.indexOf(filter?.libelle) !== -1);
     }
 }

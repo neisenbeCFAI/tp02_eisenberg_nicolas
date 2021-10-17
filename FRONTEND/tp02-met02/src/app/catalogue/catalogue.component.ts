@@ -17,6 +17,7 @@ export class CatalogueComponent implements OnInit {
 
     ngOnInit() {
         this.catalogue$ = this.monservService.getCatalogue();
+        this.filter_arg = new Produit()
     }
 
 }
