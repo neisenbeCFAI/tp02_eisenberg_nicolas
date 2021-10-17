@@ -12,13 +12,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatIconModule} from "@angular/material/icon";
 import {PhonePipe} from "./phone-pipe";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatListModule} from "@angular/material/list";
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {HttpClientModule} from "@angular/common/http";
+import { CatalogueComponent } from './catalogue/catalogue.component';
+import {FilterPipe} from "./filter-pipe";
 
 @NgModule({
     declarations: [
@@ -28,6 +31,8 @@ import {MatSidenavModule} from "@angular/material/sidenav";
         FormGroupRegistrationComponent,
         RecapFormComponent,
         PhonePipe,
+        CatalogueComponent,
+        FilterPipe
     ],
     imports: [
         BrowserModule,
@@ -43,6 +48,8 @@ import {MatSidenavModule} from "@angular/material/sidenav";
         ReactiveFormsModule,
         MatIconModule,
         MatListModule,
+        HttpClientModule,
+        FormsModule
     ],
     providers: [
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}

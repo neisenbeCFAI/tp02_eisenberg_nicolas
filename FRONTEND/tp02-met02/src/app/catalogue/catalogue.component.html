@@ -1,0 +1,16 @@
+<p>catalogue works!</p>
+<div>
+    <input type="text" [(ngModel)]="filter_arg.libelle">
+</div>
+<div *ngFor="let p of catalogue$ | async | myfilter:filter_arg">
+    <div>
+        {{ p.ref }}
+    </div>
+    <div>
+        {{ p.libelle }}
+    </div>
+    <div>
+        {{ p.prix }}
+    </div>
+</div>
+{{catalogue$ }}
