@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MonservService} from "../monserv.service";
 import {Observable} from "rxjs";
-import {Produit} from "../produit";
+import {Produit} from "../models/produit";
 
 @Component({
   selector: 'app-catalogue',
@@ -17,7 +17,7 @@ export class CatalogueComponent implements OnInit {
 
     ngOnInit() {
         this.catalogue$ = this.monservService.getCatalogue();
-        this.filter_arg = new Produit()
+        this.filter_arg = new Produit(0,"",0,"","")
     }
 
 }

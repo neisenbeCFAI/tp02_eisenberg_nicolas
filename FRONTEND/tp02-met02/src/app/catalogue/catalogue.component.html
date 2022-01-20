@@ -1,15 +1,15 @@
 <p>catalogue works!</p>
 <div>
-    <input type="text" [(ngModel)]="filter_arg!.libelle">
+    <input type="text" [(ngModel)]="filter_arg!.title">
 </div>
 <div *ngFor="let p of (catalogue$ | async)! | myfilter:filter_arg!">
     <div>
-        {{ p.ref }}
+        {{ p.id }}
     </div>
     <div>
-        {{ p.libelle }}
+        {{ p.title }}
     </div>
     <div>
-        {{ p.prix }}
+        {{ p.price.toString() }}
     </div>
 </div>

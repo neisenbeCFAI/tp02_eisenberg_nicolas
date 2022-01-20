@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, Form, FormBuilder, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {MyErrorStateMatcher} from "../password-matching-error-matcher";
+import {MyErrorStateMatcher} from "../../password-matching-error-matcher";
 import {MatDialog} from "@angular/material/dialog";
 import {RecapFormComponent} from "../recap-form/recap-form.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {User} from "../../models/user.model";
+import {AuthService} from "../../services/login.service";
+import {Router} from "@angular/router";
 
 export interface RecapData {
     firstName: string,
@@ -73,40 +76,58 @@ export class FormGroupRegistrationComponent implements OnInit {
         confirmPassword: [null, Validators.required],
     }, {validators: this.checkPasswords})
 
-    constructor(private fb: FormBuilder, public dialog: MatDialog, private sb: MatSnackBar) {
+    constructor(private fb: FormBuilder, private loginService: AuthService, private sb: MatSnackBar, private route: Router) {
     }
 
-    openDialog() {
-        let country: any =this.countries.find(element => element.prefix == this.registrationForm.controls['country'].value)?.name
-        console.log(country)
-        const DialogRef = this.dialog.open(RecapFormComponent, {
-            data: {
-                firstName: this.registrationForm.controls['firstName'].value,
-                lastName: this.registrationForm.controls['lastName'].value,
-                address: this.registrationForm.controls['address'].value,
-                city: this.registrationForm.controls['city'].value,
-                cp: this.registrationForm.controls['cp'].value,
-                country: this.countries.find(element => element.prefix == this.registrationForm.controls['country'].value)?.name,
-                prefix: this.registrationForm.controls['country'].value,
-                telephone: this.registrationForm.controls['telephone'].value,
-                email: this.registrationForm.controls['email'].value,
-                gender: this.registrationForm.controls['gender'].value,
-                username: this.registrationForm.controls['username'].value,
-            }
-        })
-        DialogRef.afterClosed().subscribe(result => {
-            if(result == true)
-            {
-
-                this.sb.open("Registered", "Ok")
-            }
-        })
-    }
+    // openDialog() {
+    //     let country: any =this.countries.find(element => element.prefix == this.registrationForm.controls['country'].value)?.name
+    //     console.log(country)
+    //     const DialogRef = this.dialog.open(RecapFormComponent, {
+    //         data: {
+    //             firstName: this.registrationForm.controls['firstName'].value,
+    //             lastName: this.registrationForm.controls['lastName'].value,
+    //             address: this.registrationForm.controls['address'].value,
+    //             city: this.registrationForm.controls['city'].value,
+    //             cp: this.registrationForm.controls['cp'].value,
+    //             country: this.countries.find(element => element.prefix == this.registrationForm.controls['country'].value)?.name,
+    //             prefix: this.registrationForm.controls['country'].value,
+    //             telephone: this.registrationForm.controls['telephone'].value,
+    //             email: this.registrationForm.controls['email'].value,
+    //             gender: this.registrationForm.controls['gender'].value,
+    //             username: this.registrationForm.controls['username'].value,
+    //         }
+    //     })
+        // DialogRef.afterClosed().subscribe(result => {
+        //     if(result == true)
+        //     {
+        //
+        //         this.sb.open("Registered", "Ok")
+        //     }
+        // })
+    // }
 
     ngOnInit(): void {
     }
     onSubmit(): void {
-        this.openDialog();
+        // this.openDialog();
+        let user: User = new User(
+            this.registrationForm.controls['firstName'].value,
+            this.registrationForm.controls['lastName'].value,
+            this.registrationForm.controls['address'].value,
+            this.registrationForm.controls['city'].value,
+            this.registrationForm.controls['cp'].value,
+            this.countries.find(element => element.prefix == this.registrationForm.controls['country'].value)!.name,
+            this.registrationForm.controls['country'].value,
+            this.registrationForm.controls['telephone'].value,
+            this.registrationForm.controls['email'].value,
+            this.registrationForm.controls['gender'].value,
+            this.registrationForm.controls['username'].value,
+            this.registrationForm.controls['password'].value,
+        )
+
+        this.loginService.register(user).subscribe((data) => {
+            this.route.navigate(["/customer/login"])
+        })
     }
 
 

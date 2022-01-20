@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {RecapData} from "../form-group-registration/form-group-registration.component";
+import {User} from "../../models/user.model";
+import {AuthService} from "../../services/login.service";
 
 @Component({
   selector: 'app-recap-form',
@@ -9,9 +11,15 @@ import {RecapData} from "../form-group-registration/form-group-registration.comp
 })
 export class RecapFormComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: RecapData) { }
+    user: User = new User("", "", "", "", "", "", "", "", "", "", "", "")
+
+  constructor(private loginService: AuthService) {
+  }
 
   ngOnInit(): void {
+        this.loginService.me().subscribe((data) => {
+            this.user = data
+        })
   }
 
 }

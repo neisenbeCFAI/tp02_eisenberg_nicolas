@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Produit} from "./produit";
+import {Produit} from "../models/produit";
 
 @Pipe({
     name: 'myfilter',
@@ -11,6 +11,6 @@ export class FilterPipe implements PipeTransform {
             return items;
         }
         // @ts-ignore
-        return items.filter((item): item is Produit => item !== undefined && item?.libelle.indexOf(filter?.libelle) !== -1);
+        return items.filter((item): item is Produit => item !== undefined && item?.title.indexOf(filter?.title) !== -1);
     }
 }
